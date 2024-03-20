@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -9,21 +6,22 @@ using UnityEngine;
 /// </summary>
 public class UserControl : MonoBehaviour
 {
-    public Camera GameCamera;
+    private Camera GameCamera;
     public float PanSpeed = 10.0f;
-    public GameObject Marker;
+    private GameObject Marker;
     
     private Unit m_Selected = null;
 
     private void Start()
     {
+        GameCamera = Camera.main;
+        Marker = GameObject.FindGameObjectWithTag("Marker");
         Marker.SetActive(false);
     }
 
     private void Update()
     {
-        Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        GameCamera.transform.position = GameCamera.transform.position + new Vector3(move.y, 0, -move.x) * PanSpeed * Time.deltaTime;
+        MoveCamera();
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -38,8 +36,8 @@ public class UserControl : MonoBehaviour
                 
                 //check if the hit object have a IUIInfoContent to display in the UI
                 //if there is none, this will be null, so this will hid the panel if it was displayed
-                var uiInfo = hit.collider.GetComponentInParent<UIMainScene.IUIInfoContent>();
-                UIMainScene.Instance.SetNewInfoContent(uiInfo);
+                //var uiInfo = hit.collider.GetComponentInParent<UIMainScene.IUIInfoContent>();
+                //UIMainScene.Instance.SetNewInfoContent(uiInfo);
             }
         }
         else if (m_Selected != null && Input.GetMouseButtonDown(1))
@@ -48,11 +46,11 @@ public class UserControl : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                var building = hit.collider.GetComponentInParent<Building>();
+                var itemRack = hit.collider.GetComponentInParent<ItemRack>();
                 
-                if (building != null)
+                if (itemRack!= null)
                 {
-                    m_Selected.GoTo(building);
+                    m_Selected.GoTo(itemRack);
                 }
                 else
                 {
@@ -62,6 +60,11 @@ public class UserControl : MonoBehaviour
         }
 
         MarkerHandling();
+    }
+
+    void MoveCamera(){
+        Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+        GameCamera.transform.position = GameCamera.transform.position + new Vector3(move.y, 0, -move.x) * PanSpeed * Time.deltaTime;
     }
     
     // Handle displaying the marker above the unit that is currently selected (or hiding it if no unit is selected)
