@@ -14,7 +14,7 @@ public abstract class Inventory : MonoBehaviour
     public int InventorySpace = -1;
     protected List<InventoryEntry> m_Inventory = new List<InventoryEntry>();
     public List<InventoryEntry> InventoryEntryList => m_Inventory;
-    protected int m_CurrentAmount = 0;
+    [SerializeField] protected int m_CurrentAmount = 0;
 
     public int AddItem(string itemId, int amount)
     {

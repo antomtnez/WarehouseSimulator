@@ -6,7 +6,8 @@ using UnityEngine.AI;
 [RequireComponent(typeof(NavMeshAgent))]
 public abstract class Unit : MonoBehaviour
 {
-    public float Speed = 3;
+    public float Speed = 5;
+    public float LoadedSpeed = 3;
 
     protected NavMeshAgent m_Agent;
     protected Inventory m_Target;
@@ -33,7 +34,7 @@ public abstract class Unit : MonoBehaviour
         }
     }
 */
-    private void Update()
+    protected void Update()
     {
         if (m_Target != null)
         {

@@ -46,11 +46,11 @@ public class UserControl : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                var pileRackPosition = hit.collider.GetComponentInParent<ItemRack>().GetAPileWithStock().position;
+                var itemRack = hit.collider.GetComponentInParent<ItemRack>();
                 
-                if (pileRackPosition != null)
+                if (itemRack!= null)
                 {
-                    m_Selected.GoTo(pileRackPosition);
+                    m_Selected.GoTo(itemRack);
                 }
                 else
                 {

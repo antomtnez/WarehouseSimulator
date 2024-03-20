@@ -1,5 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
+using UnityEditor.Build.Content;
 using UnityEngine;
 
 /// <summary>
@@ -11,6 +11,13 @@ public class TransporterUnit : Unit
 
     private Inventory m_CurrentTransportTarget;
     private Inventory.InventoryEntry m_Transporting = new Inventory.InventoryEntry();
+    private float timeRemaining = 0f;
+    private bool m_IsLoaded = false;
+
+    void Update(){
+        base.Update();
+        UpdateSpeed();
+    }
 
     // We override the GoTo function to remove the current transport target, as any go to order will cancel the transport
     public override void GoTo(Vector3 position)
@@ -19,28 +26,68 @@ public class TransporterUnit : Unit
         m_CurrentTransportTarget = null;
     }
     
-    protected override void BuildingInRange()
-    {
-        if (m_Target == DropPoint.Instance)
-        {
+    protected override void BuildingInRange(){
+        if (m_Target == DropPoint.Instance){
             //we arrive at the base, unload!
             if (m_Transporting.Count > 0)
-                m_Target.AddItem(m_Transporting.ItemId, m_Transporting.Count);
+                DroppingItems();
 
-            //we go back to the building we came from
-            GoTo(m_CurrentTransportTarget);
-            m_Transporting.Count = 0;
-            m_Transporting.ItemId = "";
-        }
-        else
-        {
+            if(!m_IsLoaded)
+                GoBackToItemRack();
+        }else{
             if (m_Target.InventoryEntryList.Count > 0)
-            {
-                m_Transporting.ItemId = m_Target.InventoryEntryList[0].ItemId;
-                m_Transporting.Count = m_Target.GetItem(m_Transporting.ItemId, MaxAmountTransported);
-                m_CurrentTransportTarget = m_Target;
-                GoTo(DropPoint.Instance);
-            }
+                LoadingItems();
+            
+            if(m_IsLoaded)
+                GoToDropItem();
         }
+    }
+
+    void DroppingItems(){
+        
+        if(timeRemaining > 0){
+            timeRemaining -= Time.deltaTime;
+        }else{
+            m_Target.AddItem(m_Transporting.ItemId, m_Transporting.Count);
+            m_IsLoaded = false;
+        }
+    }
+
+    //we go back to the item rack we came from
+    void GoBackToItemRack(){        
+        ResetLoadingCountdown();
+
+        GoTo(m_CurrentTransportTarget);
+        m_Transporting.Count = 0;
+        m_Transporting.ItemId = "";
+    }
+
+    void ResetLoadingCountdown(){
+        timeRemaining = MaxAmountTransported * 1f;
+    }
+
+    void LoadingItems(){
+        if(timeRemaining > 0){
+            timeRemaining -= Time.deltaTime;
+        }else{
+            m_Transporting.ItemId = m_Target.InventoryEntryList[0].ItemId;
+            m_Transporting.Count = m_Target.GetItem(m_Transporting.ItemId, MaxAmountTransported);
+            m_IsLoaded = true;
+        }
+    }
+
+    void GoToDropItem(){
+        ResetDroppingCountdown();
+
+        m_CurrentTransportTarget = m_Target;
+        GoTo(DropPoint.Instance);
+    }
+
+    void ResetDroppingCountdown(){
+        timeRemaining = m_Transporting.Count * 1;
+    }
+
+    void UpdateSpeed(){
+        m_Agent.speed = m_IsLoaded ? LoadedSpeed : Speed;
     }
 }

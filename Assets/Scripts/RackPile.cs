@@ -10,11 +10,11 @@ public class RackPile : MonoBehaviour
         if(ItemPileGO == null) ItemPileGO = Instantiate(Item.ItemGameObject, transform);
     }
 
-    public void UpdateItemPileGO(bool IsEmpty){
-        if(IsEmpty){
-            ItemPileGO.SetActive(false);
-        }else{
+    public void ActivePileStockGO(bool hasStock){
+        if(hasStock){
             ItemPileGO.SetActive(true);
+        }else{
+            ItemPileGO.SetActive(false);
         }
     }
 
