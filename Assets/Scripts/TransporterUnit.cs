@@ -35,6 +35,9 @@ public class TransporterUnit : Unit
             if(!m_IsLoaded)
                 GoBackToItemRack();
         }else{
+            if(m_Transporting.Count > 0)
+                DroppingItems();
+
             if (m_Target.InventoryEntryList.Count > 0)
                 LoadingItems();
             
@@ -53,13 +56,16 @@ public class TransporterUnit : Unit
         }
     }
 
+    void RemoveLoadedItems(){
+        m_Transporting.Count = 0;
+        m_Transporting.ItemId = "";
+    }
+
     //we go back to the item rack we came from
     void GoBackToItemRack(){        
         ResetLoadingCountdown();
 
         GoTo(m_CurrentTransportTarget);
-        m_Transporting.Count = 0;
-        m_Transporting.ItemId = "";
     }
 
     void ResetLoadingCountdown(){

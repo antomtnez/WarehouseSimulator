@@ -106,7 +106,7 @@ NavMeshSettings:
   m_BuildSettings:
     serializedVersion: 2
     agentTypeID: 0
-    agentRadius: 0.2
+    agentRadius: 0.3
     agentHeight: 2
     agentSlope: 15
     agentClimb: 0.1
@@ -114,7 +114,7 @@ NavMeshSettings:
     maxJumpAcrossDistance: 0
     minRegionArea: 2
     manualCellSize: 0
-    cellSize: 0.06666667
+    cellSize: 0.1
     manualTileSize: 0
     tileSize: 256
     accuratePlacement: 0
@@ -153,6 +153,7 @@ Transform:
   - {fileID: 543450653095695316}
   - {fileID: 543450652240939400}
   - {fileID: 2045213193}
+  - {fileID: 1321192052}
   - {fileID: 543450652660788425}
   m_Father: {fileID: 0}
   m_RootOrder: 2
@@ -1022,6 +1023,100 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!1001 &1321192051
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 200090843}
+    m_Modifications:
+    - target: {fileID: 2045213192, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: ProductionSpeed
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730681806743090907, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1730681807309947463, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 1897517557425072333, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 13.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -10.02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126478, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_Name
+      value: ItemRacks
+      objectReference: {fileID: 0}
+    - target: {fileID: 4911680404194126478, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 5889972762727451764, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047393943452963426, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    - target: {fileID: 6047393944009647870, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 4294967295
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+--- !u!4 &1321192052 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4911680404194126473, guid: 72635404b8b959c47a53d00e1392bcb6, type: 3}
+  m_PrefabInstance: {fileID: 1321192051}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1349036574
 GameObject:
   m_ObjectHideFlags: 0
@@ -1886,7 +1981,7 @@ Transform:
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_Children: []
   m_Father: {fileID: 200090843}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450653095695316 stripped
 Transform:
@@ -1923,6 +2018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   InventorySpace: -1
+  m_Inventory: []
   m_CurrentAmount: 0
   DropOrder:
     OrderInventory:
@@ -1938,6 +2034,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 200090843}
     m_Modifications:
+    - target: {fileID: 398615922, guid: 84f434e8f49e38d48b6996ad51b1c52c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1192638991, guid: 84f434e8f49e38d48b6996ad51b1c52c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 79302050423950423, guid: 84f434e8f49e38d48b6996ad51b1c52c, type: 3}
       propertyPath: m_Name
       value: Truck
