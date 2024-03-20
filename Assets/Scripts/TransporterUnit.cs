@@ -10,7 +10,7 @@ public class TransporterUnit : Unit
     public int MaxAmountTransported = 1;
 
     private Inventory m_CurrentTransportTarget;
-    private Inventory.InventoryEntry m_Transporting = new Inventory.InventoryEntry();
+    [SerializeField] Inventory.InventoryEntry m_Transporting = new Inventory.InventoryEntry();
     private float timeRemaining = 0f;
     private bool m_IsLoaded = false;
 

@@ -12,11 +12,11 @@ public abstract class Inventory : MonoBehaviour
 
     [Tooltip("-1 is infinite")]
     public int InventorySpace = -1;
-    protected List<InventoryEntry> m_Inventory = new List<InventoryEntry>();
+    [SerializeField] protected List<InventoryEntry> m_Inventory = new List<InventoryEntry>();
     public List<InventoryEntry> InventoryEntryList => m_Inventory;
     [SerializeField] protected int m_CurrentAmount = 0;
 
-    public int AddItem(string itemId, int amount)
+    public virtual int AddItem(string itemId, int amount)
     {
         //as we use the shortcut -1 = infinite amount, we need to actually set it to max value for computation following
         int maxInventorySpace = InventorySpace == -1 ? Int32.MaxValue : InventorySpace;

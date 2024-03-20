@@ -1924,6 +1924,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   InventorySpace: -1
   m_CurrentAmount: 0
+  DropOrder:
+    OrderInventory:
+    - ItemId: money
+      Count: 3
+    - ItemId: soda
+      Count: 2
   isUsing: 0
 --- !u!1001 &997781628531777381
 PrefabInstance:
