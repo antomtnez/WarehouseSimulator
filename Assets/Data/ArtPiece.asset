@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98a27e3ae0287e64e801d7c113684122, type: 3}
-  m_Name: Soda
+  m_Name: ArtPiece
   m_EditorClassIdentifier: 
-  Id: soda
-  Name: Soda
-  Icon: {fileID: 21300000, guid: 1e67178f621022c4dbbef4e514fb0b9a, type: 3}
-  ItemGameObject: {fileID: 1540921698907979789, guid: 00a74f1114297c04f8c602a505c25caa, type: 3}
-  MaxStockableInAPile: 16
+  Id: artPiece
+  Name: ArtPiece
+  Icon: {fileID: 21300000, guid: 47425a4b09ae393419dafee794526390, type: 3}
+  ItemGameObject: {fileID: 8006135473965660272, guid: 74e60622cf0e8ea41b3e50ba5f674d18, type: 3}
+  MaxStockableInAPile: 6

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 98a27e3ae0287e64e801d7c113684122, type: 3}
-  m_Name: Money
+  m_Name: Gas
   m_EditorClassIdentifier: 
-  Id: money
-  Name: Money
-  Icon: {fileID: 21300000, guid: b42f1aab5038c1b4182a40be6cc0b232, type: 3}
-  ItemGameObject: {fileID: 210717046896684455, guid: e749e69403e932149af43973c39deb7a, type: 3}
-  MaxStockableInAPile: 10
+  Id: gas
+  Name: Gas
+  Icon: {fileID: 21300000, guid: 750c4d0cdbc6bad4e9ef9c41fe497912, type: 3}
+  ItemGameObject: {fileID: 9032343442294082729, guid: 686661a32f80d3849a5eefe377d640ab, type: 3}
+  MaxStockableInAPile: 6
