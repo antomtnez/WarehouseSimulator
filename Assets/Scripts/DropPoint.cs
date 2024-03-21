@@ -11,9 +11,12 @@ public class DropPoint : Inventory
     [System.Serializable]
     public class Order{
         public List<InventoryEntry> OrderInventory = new List<InventoryEntry>();
-        public int Reward;
-        public Order(List<Item> itemsDB){
-            List<Item> itemsAvaliables = itemsDB;
+        public int Reward = 0;
+        public Order(ItemDatabase itemsDB){
+            List<Item> itemsAvaliables = new List<Item>();
+            foreach(Item item in itemsDB.ItemTypes)
+                itemsAvaliables.Add(item);
+                
             int itemsInOrder = UnityEngine.Random.Range(1, 4);
 
             for(int i=0; i < itemsInOrder; i++){
@@ -22,6 +25,8 @@ public class DropPoint : Inventory
                     ItemId = itemsAvaliables[itemAvaliable].Id,
                     Count = UnityEngine.Random.Range(3,21)
                 });
+                itemsAvaliables.Remove(itemsAvaliables[itemAvaliable]);
+                Reward += (itemsDB.GetItem(OrderInventory[i].ItemId).SellingPrice * OrderInventory[i].Count);
             }
         }
     }
@@ -34,6 +39,7 @@ public class DropPoint : Inventory
 
     private void Awake(){
         Instance = this;
+        m_itemDB.Init();
     }
 
     void Start(){
@@ -74,6 +80,6 @@ public class DropPoint : Inventory
     }
 
     void GenerateNewOrder(){
-        DropOrder = new Order(m_itemDB.ItemTypes); 
+        DropOrder = new Order(m_itemDB); 
     }
 }
