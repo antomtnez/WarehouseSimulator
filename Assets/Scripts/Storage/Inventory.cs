@@ -46,7 +46,7 @@ public abstract class Inventory : MonoBehaviour
     }
 
     //return how much was actually removed, will be 0 if couldn't get any.
-    public int GetItem(string resourceId, int requestAmount)
+    public virtual int GetItem(string resourceId, int requestAmount)
     {
         int found = m_Inventory.FindIndex(entry => entry.ItemId == resourceId);
         
@@ -62,7 +62,6 @@ public abstract class Inventory : MonoBehaviour
             }
 
             m_CurrentAmount -= amount;
-
             return amount;
         }
 

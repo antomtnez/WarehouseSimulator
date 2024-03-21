@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8189319411018754292}
-  - component: {fileID: 1045556385343683792}
+  - component: {fileID: 866299153747391392}
   m_Layer: 0
   m_Name: Pile1
   m_TagString: Untagged
@@ -31,7 +31,7 @@ Transform:
   m_Father: {fileID: 5312557517802471373}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1045556385343683792
+--- !u!114 &866299153747391392
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -40,11 +40,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1712884692928217188}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 637e252d329de4d468edce8740703534, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b51d282e6635b542b3e854665de4933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Item: {fileID: 0}
-  ItemPileGO: {fileID: 0}
 --- !u!1 &2128221261095096909
 GameObject:
   m_ObjectHideFlags: 0
@@ -330,7 +328,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4888578130310834516}
-  - component: {fileID: 5451343510686329634}
+  - component: {fileID: 6578951436840916150}
   m_Layer: 0
   m_Name: Pile0
   m_TagString: Untagged
@@ -352,7 +350,7 @@ Transform:
   m_Father: {fileID: 5312557517802471373}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5451343510686329634
+--- !u!114 &6578951436840916150
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,11 +359,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 6642060282468967645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 637e252d329de4d468edce8740703534, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b51d282e6635b542b3e854665de4933, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Item: {fileID: 0}
-  ItemPileGO: {fileID: 0}
 --- !u!1 &7418919998230466935
 GameObject:
   m_ObjectHideFlags: 0

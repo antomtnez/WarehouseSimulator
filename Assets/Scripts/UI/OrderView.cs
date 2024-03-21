@@ -12,7 +12,7 @@ public class OrderView : MonoBehaviour
     public void SetOrderItems(List<Inventory.InventoryEntry> orderEntry, List<Inventory.InventoryEntry> inventoryEntry){
         for(int i=0; i < orderEntry.Count; i++){
             ItemBoxView itemBoxView = Instantiate(itemBoxPrefab, itemBoxListPanel.transform).GetComponent<ItemBoxView>();
-            itemBoxView.SetItemIcon(GameManager.Instance.ItemDB.GetItem(orderEntry[i].ItemId));
+            itemBoxView.SetItemIcon(WarehouseStorage.Instance.ItemDB.GetItem(orderEntry[i].ItemId));
             itemBoxView.SetItemText(inventoryEntry[i].Count, orderEntry[i].Count);
             m_ItemBoxViewDictionary.Add(orderEntry[i].ItemId, itemBoxView);
         }

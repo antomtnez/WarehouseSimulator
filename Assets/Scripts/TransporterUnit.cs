@@ -1,5 +1,3 @@
-using System.Collections;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 /// <summary>
@@ -14,7 +12,7 @@ public class TransporterUnit : Unit
     private float timeRemaining = 0f;
     private bool m_IsLoaded = false;
 
-    void Update(){
+    new void Update(){
         base.Update();
         UpdateSpeed();
     }

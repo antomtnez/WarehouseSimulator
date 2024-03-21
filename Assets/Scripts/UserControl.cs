@@ -50,7 +50,7 @@ public class UserControl : MonoBehaviour
                 
                 if (itemRack!= null)
                 {
-                    m_Selected.GoTo(itemRack);
+                    //m_Selected.GoTo(itemRack);
                 }
                 else
                 {

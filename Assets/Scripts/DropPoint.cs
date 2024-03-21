@@ -61,12 +61,11 @@ public class DropPoint : Inventory
     }
 
     public override int AddItem(string itemId, int amount){
-        int foundInOrder = DropOrder.OrderInventory.FindIndex(entry => entry.ItemId == itemId);
-        int foundInInventory = DropOrder.OrderInventory.FindIndex(entry => entry.ItemId == itemId);
+        int found = DropOrder.OrderInventory.FindIndex(entry => entry.ItemId == itemId);
         
         try{
-            int addedAmount = Mathf.Min(DropOrder.OrderInventory[foundInOrder].Count - m_Inventory[foundInInventory].Count, amount);
-            m_Inventory[foundInInventory].Count += addedAmount;
+            int addedAmount = Mathf.Min(DropOrder.OrderInventory[found].Count - m_Inventory[found].Count, amount);
+            m_Inventory[found].Count += addedAmount;
         
             if (addedAmount == 0)
                 return amount;
@@ -82,6 +81,6 @@ public class DropPoint : Inventory
     }
 
     void GenerateNewOrder(){
-        DropOrder = new Order(GameManager.Instance.ItemDB); 
+        DropOrder = new Order(WarehouseStorage.Instance.ItemDB); 
     }
 }
