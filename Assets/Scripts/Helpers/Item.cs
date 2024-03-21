@@ -8,4 +8,6 @@ public class Item : ScriptableObject
     public Sprite Icon;
     public GameObject ItemGameObject;
     public int MaxStockableInAPile;
+    public int BuyingPrice;
+    public int SellingPrice;
 }
