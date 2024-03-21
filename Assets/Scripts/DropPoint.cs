@@ -16,7 +16,7 @@ public class DropPoint : Inventory
             List<Item> itemsAvaliables = new List<Item>();
             foreach(Item item in itemsDB.ItemTypes)
                 itemsAvaliables.Add(item);
-                
+
             int itemsInOrder = UnityEngine.Random.Range(1, 4);
 
             for(int i=0; i < itemsInOrder; i++){
@@ -31,20 +31,21 @@ public class DropPoint : Inventory
         }
     }
     
-    public ItemDatabase m_itemDB;
     public static DropPoint Instance { get; private set; }
     public Order DropOrder;
 
     public bool isUsing = false;
 
+    private OrderPresenter m_OrderPresenter;
+
     private void Awake(){
         Instance = this;
-        m_itemDB.Init();
     }
 
     void Start(){
         GenerateNewOrder();
         SetInventoryByOrder();
+        m_OrderPresenter = new OrderPresenter(this, FindObjectOfType<OrderView>());
     }
 
     void SetInventoryByOrder(){
@@ -80,6 +81,6 @@ public class DropPoint : Inventory
     }
 
     void GenerateNewOrder(){
-        DropOrder = new Order(m_itemDB); 
+        DropOrder = new Order(GameManager.Instance.ItemDB); 
     }
 }
