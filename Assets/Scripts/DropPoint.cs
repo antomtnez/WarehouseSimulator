@@ -11,16 +11,33 @@ public class DropPoint : Inventory
     [System.Serializable]
     public class Order{
         public List<InventoryEntry> OrderInventory = new List<InventoryEntry>();
-    }
+        public int Reward;
+        public Order(List<Item> itemsDB){
+            List<Item> itemsAvaliables = itemsDB;
+            int itemsInOrder = UnityEngine.Random.Range(1, 4);
 
+            for(int i=0; i < itemsInOrder; i++){
+                int itemAvaliable = UnityEngine.Random.Range(0, itemsAvaliables.Count);
+                OrderInventory.Add(new InventoryEntry(){
+                    ItemId = itemsAvaliables[itemAvaliable].Id,
+                    Count = UnityEngine.Random.Range(3,21)
+                });
+            }
+        }
+    }
+    
+    public ItemDatabase m_itemDB;
     public static DropPoint Instance { get; private set; }
     public Order DropOrder;
 
     public bool isUsing = false;
 
-    private void Awake()
-    {
+    private void Awake(){
         Instance = this;
+    }
+
+    void Start(){
+        GenerateNewOrder();
         SetInventoryByOrder();
     }
 
@@ -36,8 +53,7 @@ public class DropPoint : Inventory
         }
     }
 
-    public override int AddItem(string itemId, int amount)
-    {
+    public override int AddItem(string itemId, int amount){
         int foundInOrder = DropOrder.OrderInventory.FindIndex(entry => entry.ItemId == itemId);
         int foundInInventory = DropOrder.OrderInventory.FindIndex(entry => entry.ItemId == itemId);
         
@@ -55,5 +71,9 @@ public class DropPoint : Inventory
             Debug.LogWarning($"This item isn't be in the order: {e}");
             return 0;
         }
+    }
+
+    void GenerateNewOrder(){
+        DropOrder = new Order(m_itemDB.ItemTypes); 
     }
 }

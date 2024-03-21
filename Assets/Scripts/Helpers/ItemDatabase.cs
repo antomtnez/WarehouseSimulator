@@ -4,15 +4,15 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ItemDatabase", menuName = "Items/Item Database")]
 public class ItemDatabase : ScriptableObject
 {
-    public List<Item> ResourceTypes = new List<Item>();
+    public List<Item> ItemTypes = new List<Item>();
     private Dictionary<string, Item> m_Database;
     
     public void Init()
     {
         m_Database = new Dictionary<string, Item>();
-        foreach (var resourceItem in ResourceTypes)
+        foreach (var item in ItemTypes)
         {
-            m_Database.Add(resourceItem.Id, resourceItem);
+            m_Database.Add(item.Id, item);
         }
     }
 
