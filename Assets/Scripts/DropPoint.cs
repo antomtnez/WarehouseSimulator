@@ -72,6 +72,7 @@ public class DropPoint : Inventory
                 return amount;
             
             m_CurrentAmount += addedAmount;
+            m_OrderPresenter.OnInventoryChanged(itemId);
             return amount - addedAmount;
 
         }catch(Exception e){

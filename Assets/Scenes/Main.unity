@@ -3963,7 +3963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemBoxPrefab: {fileID: 2902475090825168015, guid: df107b63f6c12b64caf69e32ef8c86f9, type: 3}
-  itemBoxList: {fileID: 534546665}
+  itemBoxListPanel: {fileID: 534546665}
   rewardText: {fileID: 782111752}
 --- !u!1 &1790238014
 GameObject:
@@ -4014,6 +4014,7 @@ MonoBehaviour:
   CurrentExperience: 0
   Money: 0
   m_ItemRacks: []
+  m_ItemDatabase: {fileID: 11400000, guid: 43e143e8d41d34249bde9c33dc3c5a3e, type: 2}
 --- !u!1 &1850902126
 GameObject:
   m_ObjectHideFlags: 0
