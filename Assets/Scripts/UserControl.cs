@@ -46,11 +46,11 @@ public class UserControl : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                var itemRack = hit.collider.GetComponentInParent<ItemRack>();
+                var storageInteractable = hit.collider.GetComponentInParent<IStorageInteractable>();
                 
-                if (itemRack!= null)
+                if (storageInteractable!= null)
                 {
-                    //m_Selected.GoTo(itemRack);
+                    m_Selected.GoTo(storageInteractable);
                 }
                 else
                 {

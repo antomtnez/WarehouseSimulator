@@ -6,7 +6,7 @@ using UnityEngine;
 /// A special building that hold a static reference so it can be found by other script easily (e.g. for Unit to go back
 /// to it)
 /// </summary>
-public class DropPoint : Inventory
+public class DropPoint : Inventory, IStorageInteractable
 { 
     [System.Serializable]
     public class Order{
@@ -82,5 +82,26 @@ public class DropPoint : Inventory
 
     void GenerateNewOrder(){
         DropOrder = new Order(WarehouseStorage.Instance.ItemDB); 
+    }
+
+    public Vector3 GetPosition(){
+        return transform.position;
+    }
+
+    public bool IsEmpty()
+    {
+        return m_CurrentAmount <= 0;
+    }
+
+    public int AddItem(int amount){
+        throw new NotImplementedException();
+    }
+
+    public int GetItem(int requiredAmount){
+        throw new NotImplementedException();
+    }
+
+    public string GetItemId(){
+        throw new NotImplementedException();
     }
 }
