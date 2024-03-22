@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ResourceItem", menuName = "Tutorial/Resource Item")]
+[CreateAssetMenu(fileName = "Item", menuName = "Items/Item")]
 public class Item : ScriptableObject
 {
     public string Id;
@@ -8,4 +8,6 @@ public class Item : ScriptableObject
     public Sprite Icon;
     public GameObject ItemGameObject;
     public int MaxStockableInAPile;
+    public int BuyingPrice;
+    public int SellingPrice;
 }

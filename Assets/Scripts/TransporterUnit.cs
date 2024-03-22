@@ -1,5 +1,3 @@
-using System.Collections;
-using UnityEditor.Build.Content;
 using UnityEngine;
 
 /// <summary>
@@ -7,14 +5,13 @@ using UnityEngine;
 /// </summary>
 public class TransporterUnit : Unit
 {
-    public int MaxAmountTransported = 1;
-
-    private Inventory m_CurrentTransportTarget;
-    [SerializeField] Inventory.InventoryEntry m_Transporting = new Inventory.InventoryEntry();
+    private IStorageInteractable m_CurrentTransportTarget;
+    [SerializeField] ItemPile m_ItemPileTransporting;
+    public int m_AmountRequiredToTransport = 3;
     private float timeRemaining = 0f;
     private bool m_IsLoaded = false;
 
-    void Update(){
+    new void Update(){
         base.Update();
         UpdateSpeed();
     }
@@ -29,36 +26,39 @@ public class TransporterUnit : Unit
     protected override void BuildingInRange(){
         if (m_Target == DropPoint.Instance){
             //we arrive at the base, unload!
-            if (m_Transporting.Count > 0)
+            if (!m_ItemPileTransporting.IsEmpty())
                 DroppingItems();
 
-            if(!m_IsLoaded)
+            if (!m_IsLoaded)
                 GoBackToItemRack();
         }else{
-            if(m_Transporting.Count > 0)
+            if(!m_ItemPileTransporting.IsEmpty())
                 DroppingItems();
 
-            if (m_Target.InventoryEntryList.Count > 0)
+            if (!m_Target.IsEmpty())
                 LoadingItems();
             
-            if(m_IsLoaded)
+            if (m_IsLoaded)
                 GoToDropItem();
         }
     }
 
     void DroppingItems(){
-        
         if(timeRemaining > 0){
             timeRemaining -= Time.deltaTime;
         }else{
-            m_Target.AddItem(m_Transporting.ItemId, m_Transporting.Count);
+            if(m_Target == DropPoint.Instance){
+                m_ItemPileTransporting.AddItem(m_Target.AddItem(m_ItemPileTransporting.ItemId, m_ItemPileTransporting.GetAllPile()));    
+            }else{
+                m_Target.AddItem(m_ItemPileTransporting.GetAllPile());
+                WarehouseStorage.Instance.UpdateItemStorage(m_Target.GetItemId());
+            }
             m_IsLoaded = false;
         }
     }
 
     void RemoveLoadedItems(){
-        m_Transporting.Count = 0;
-        m_Transporting.ItemId = "";
+        m_ItemPileTransporting = new ItemPile();
     }
 
     //we go back to the item rack we came from
@@ -69,16 +69,17 @@ public class TransporterUnit : Unit
     }
 
     void ResetLoadingCountdown(){
-        timeRemaining = MaxAmountTransported * 1f;
+        timeRemaining = m_AmountRequiredToTransport * 1f;
     }
 
     void LoadingItems(){
         if(timeRemaining > 0){
             timeRemaining -= Time.deltaTime;
         }else{
-            m_Transporting.ItemId = m_Target.InventoryEntryList[0].ItemId;
-            m_Transporting.Count = m_Target.GetItem(m_Transporting.ItemId, MaxAmountTransported);
+            m_ItemPileTransporting.Init(m_Target.GetItemId());
+            m_ItemPileTransporting.AddItem(m_Target.GetItem(m_AmountRequiredToTransport)); 
             m_IsLoaded = true;
+            WarehouseStorage.Instance.UpdateItemStorage(m_Target.GetItemId());
         }
     }
 
@@ -90,7 +91,7 @@ public class TransporterUnit : Unit
     }
 
     void ResetDroppingCountdown(){
-        timeRemaining = m_Transporting.Count * 1;
+        timeRemaining = m_ItemPileTransporting.ItemStock * 1;
     }
 
     void UpdateSpeed(){

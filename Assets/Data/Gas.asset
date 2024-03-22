@@ -17,3 +17,5 @@ MonoBehaviour:
   Icon: {fileID: 21300000, guid: 750c4d0cdbc6bad4e9ef9c41fe497912, type: 3}
   ItemGameObject: {fileID: 9032343442294082729, guid: 686661a32f80d3849a5eefe377d640ab, type: 3}
   MaxStockableInAPile: 6
+  BuyingPrice: 60
+  SellingPrice: 80

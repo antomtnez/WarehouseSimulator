@@ -10,7 +10,7 @@ public abstract class Unit : MonoBehaviour
     public float LoadedSpeed = 3;
 
     protected NavMeshAgent m_Agent;
-    protected Inventory m_Target;
+    [SerializeField] protected IStorageInteractable m_Target;
 
     protected void Awake()
     {
@@ -38,7 +38,7 @@ public abstract class Unit : MonoBehaviour
     {
         if (m_Target != null)
         {
-            float distance = Vector3.Distance(m_Target.transform.position, transform.position);
+            float distance = Vector3.Distance(m_Target.GetPosition(), transform.position);
             if (distance < 2.0f)
             {
                 m_Agent.isStopped = true;
@@ -47,13 +47,13 @@ public abstract class Unit : MonoBehaviour
         }
     }
 
-    public virtual void GoTo(Inventory target)
+    public virtual void GoTo(IStorageInteractable target)
     {
         m_Target = target;
 
         if (m_Target != null)
         {
-            m_Agent.SetDestination(m_Target.transform.position);
+            m_Agent.SetDestination(m_Target.GetPosition());
             m_Agent.isStopped = false;
         }
     }

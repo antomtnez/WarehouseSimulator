@@ -10,7 +10,7 @@ public class UserControl : MonoBehaviour
     public float PanSpeed = 10.0f;
     private GameObject Marker;
     
-    private Unit m_Selected = null;
+    private Carrier m_Selected = null;
 
     private void Start()
     {
@@ -31,7 +31,8 @@ public class UserControl : MonoBehaviour
             {
                 //the collider could be children of the unit, so we make sure to check in the parent
                 var unit = hit.collider.GetComponentInParent<Unit>();
-                m_Selected = unit;
+                var carrier = hit.collider.GetComponentInParent<Carrier>();
+                m_Selected = carrier;
                 
                 
                 //check if the hit object have a IUIInfoContent to display in the UI
@@ -46,11 +47,11 @@ public class UserControl : MonoBehaviour
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit))
             {
-                var itemRack = hit.collider.GetComponentInParent<ItemRack>();
+                var storageInteractable = hit.collider.GetComponentInParent<IStorageInteractable>();
                 
-                if (itemRack!= null)
+                if (storageInteractable!= null)
                 {
-                    m_Selected.GoTo(itemRack);
+                    m_Selected.GoTo(storageInteractable);
                 }
                 else
                 {
