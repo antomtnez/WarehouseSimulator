@@ -10,17 +10,18 @@ public class WarehouseStorage : MonoBehaviour
     [SerializeField] List<ItemStorage> m_ItemsStorages = new List<ItemStorage>();
     public List<ItemStorage> ItemStorages => m_ItemsStorages;
 
-    private WarehouseStoragePresenter warehouseStoragePresenter;
+    private WarehouseStoragePresenter m_WarehouseStoragePresenter;
 
     
     void Awake(){
         Instance = this;
         m_ItemDatabase.Init();
+        Init();
+        m_WarehouseStoragePresenter = new WarehouseStoragePresenter(FindObjectOfType<WarehouseStorageView>());
     }
 
     void Start(){
-        Init();
-        warehouseStoragePresenter = new WarehouseStoragePresenter(FindObjectOfType<WarehouseStorageView>());
+        StartStoragesWithFullStock();
     }
 
     void Init(){
@@ -30,6 +31,13 @@ public class WarehouseStorage : MonoBehaviour
             }catch(Exception e){
                 Debug.LogWarning(e);
             }
+        }
+    }
+
+    void StartStoragesWithFullStock(){
+        foreach(ItemStorage itemStorage in m_ItemsStorages){
+            itemStorage.AddItem(itemStorage.ItemMaxStock);
+            m_WarehouseStoragePresenter.OnItemStockChanged(itemStorage);
         }
     }
 }

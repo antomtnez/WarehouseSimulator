@@ -2,20 +2,21 @@ using UnityEngine;
 
 public class ItemPile : MonoBehaviour
 {
-    private string ItemId;
-    GameObject ItemPileDisplay;
+    private string m_ItemId;
+    private GameObject ItemPileDisplay;
     [SerializeField]private int m_ItemStock = 0;
     [SerializeField]private int m_ItemMaxStock = 0;
     public int ItemStock => m_ItemStock;
     public int ItemMaxStock => m_ItemMaxStock;
+    public string ItemId => m_ItemId;
 
     public void Init(string ItemId){
-        this.ItemId = ItemId;
+        m_ItemId = ItemId;
         m_ItemMaxStock = WarehouseStorage.Instance.ItemDB.GetItem(ItemId).MaxStockableInAPile; 
         if(ItemPileDisplay == null)
-           Instantiate(WarehouseStorage.Instance.ItemDB.GetItem(ItemId).ItemGameObject, transform);
+            ItemPileDisplay = Instantiate(WarehouseStorage.Instance.ItemDB.GetItem(ItemId).ItemGameObject, transform);
         
-        //SetDisplay();
+        SetDisplay();
     }
 
     public int AddItem(int amount){
@@ -36,6 +37,10 @@ public class ItemPile : MonoBehaviour
     }
 
     void SetDisplay(){
-        ItemPileDisplay.SetActive(ItemStock >= 1);
+        ItemPileDisplay.SetActive(!IsEmpty());
+    }
+
+    public bool IsEmpty(){
+        return m_ItemStock <= 0;
     }
 }

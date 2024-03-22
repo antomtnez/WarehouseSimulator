@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemRack : MonoBehaviour
+public class ItemRack : MonoBehaviour, IStorageInteractable
 {
     [SerializeField] Item m_Item;
     [SerializeField]private int m_ItemStock = 0;
@@ -9,7 +9,7 @@ public class ItemRack : MonoBehaviour
     public string ItemId => m_Item.Id;
     public int ItemStock => m_ItemStock;
     public int ItemMaxStock => m_ItemMaxStock;
-    [SerializeField] List<ItemPile> m_ItemPilesAvaliables = new List<ItemPile>();
+    [SerializeField] List<ItemPile> m_ItemPiles = new List<ItemPile>();
 
     public void Init(){
         SetRackPiles();
@@ -20,25 +20,26 @@ public class ItemRack : MonoBehaviour
     void SetRackPiles(){
         foreach(ItemPile itemPile in transform.GetComponentsInChildren<ItemPile>()){
             itemPile.Init(m_Item.Id);
-            m_ItemPilesAvaliables.Add(itemPile);
+            m_ItemPiles.Add(itemPile);
         }
     }
 
     //We give the inventory space according to the piles we have available 
     //and the maximum amount that the item allows us to stack in a pile.
     void SetMaxStock(){
-        m_ItemMaxStock = m_ItemPilesAvaliables[0].ItemMaxStock * m_ItemPilesAvaliables.Count;
+        m_ItemMaxStock = m_ItemPiles[0].ItemMaxStock * m_ItemPiles.Count;
     }
 
     void SetStock(){
         m_ItemStock = 0;
-        foreach(ItemPile itemPile in m_ItemPilesAvaliables)
+        foreach(ItemPile itemPile in m_ItemPiles)
             m_ItemStock += itemPile.ItemStock;
     }
 
     public int AddItem(int amount){
-        for(int i=0; i < m_ItemPilesAvaliables.Count || ItemStock == ItemMaxStock || amount == 0; i++){
-            amount = m_ItemPilesAvaliables[i].AddItem(amount);
+        for(int i=0; i < m_ItemPiles.Count; i++){
+            amount = m_ItemPiles[i].AddItem(amount);
+            if(ItemStock == ItemMaxStock || amount == 0) break;
         }
         SetStock();
         return amount;
@@ -47,10 +48,35 @@ public class ItemRack : MonoBehaviour
     public int GetItem(int requestAmount){
         int amount = Mathf.Min(requestAmount, ItemStock);
         requestAmount = 0;
-        for(int i = m_ItemPilesAvaliables.Count; i <= 0 || requestAmount == amount; i--){
-            requestAmount += m_ItemPilesAvaliables[i].GetItem(amount);
+        for(int i = m_ItemPiles.Count; i <= 0 || requestAmount == amount; i--){
+            requestAmount += m_ItemPiles[i].GetItem(amount);
         }
         SetStock();
         return requestAmount;
+    }
+
+    public Vector3 GetPosition(){
+        int pilePositionIndex = 0;
+
+        for(int i=m_ItemPiles.Count; i <= 0; i--){
+            if(!m_ItemPiles[i].IsEmpty()){
+                pilePositionIndex = i;
+                break;
+            }
+        }
+
+        return m_ItemPiles[pilePositionIndex].transform.position;   
+    }
+
+    public bool IsEmpty(){
+        return m_ItemStock <= 0;
+    }
+
+    public int AddItem(string itemId, int amount){
+        throw new System.NotImplementedException();
+    }
+
+    public string GetItemId(){
+        return m_Item.Id;
     }
 }

@@ -38,8 +38,9 @@ public class ItemStorage
     }
 
     public int AddItem(int amount){
-        for(int i=0; i < m_ItemRacks.Count || ItemStock == ItemMaxStock || amount == 0; i++){
+        for(int i=0; i < m_ItemRacks.Count; i++){
             amount = m_ItemRacks[i].AddItem(amount);
+            if(ItemStock == ItemMaxStock || amount == 0) break;
         }
         SetStock();
         return amount;
