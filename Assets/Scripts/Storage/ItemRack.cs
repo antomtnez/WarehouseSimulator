@@ -48,24 +48,22 @@ public class ItemRack : MonoBehaviour, IStorageInteractable
     public int GetItem(int requestAmount){
         int amount = Mathf.Min(requestAmount, ItemStock);
         requestAmount = 0;
-        for(int i = m_ItemPiles.Count; i <= 0 || requestAmount == amount; i--){
+        for(int i = m_ItemPiles.Count-1; i >= 0; i--){
             requestAmount += m_ItemPiles[i].GetItem(amount);
+            if(requestAmount == amount) break;
         }
         SetStock();
         return requestAmount;
     }
 
     public Vector3 GetPosition(){
-        int pilePositionIndex = 0;
-
-        for(int i=m_ItemPiles.Count; i <= 0; i--){
+        for(int i = m_ItemPiles.Count-1; i > 0; i--){
             if(!m_ItemPiles[i].IsEmpty()){
-                pilePositionIndex = i;
-                break;
+                return m_ItemPiles[i].transform.position;
             }
         }
 
-        return m_ItemPiles[pilePositionIndex].transform.position;   
+        return transform.position;
     }
 
     public bool IsEmpty(){

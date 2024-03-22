@@ -5,10 +5,9 @@ using UnityEngine;
 /// </summary>
 public class TransporterUnit : Unit
 {
-    public int MaxAmountTransported = 0;
-    private int m_AmountTransported;
     private IStorageInteractable m_CurrentTransportTarget;
     [SerializeField] ItemPile m_ItemPileTransporting;
+    public int m_AmountRequiredToTransport = 3;
     private float timeRemaining = 0f;
     private bool m_IsLoaded = false;
 
@@ -33,6 +32,9 @@ public class TransporterUnit : Unit
             if (!m_IsLoaded)
                 GoBackToItemRack();
         }else{
+            if(!m_ItemPileTransporting.IsEmpty())
+                DroppingItems();
+
             if (!m_Target.IsEmpty())
                 LoadingItems();
             
@@ -46,9 +48,10 @@ public class TransporterUnit : Unit
             timeRemaining -= Time.deltaTime;
         }else{
             if(m_Target == DropPoint.Instance){
-                m_Target.AddItem(m_ItemPileTransporting.ItemId, m_ItemPileTransporting.ItemStock);    
+                m_ItemPileTransporting.AddItem(m_Target.AddItem(m_ItemPileTransporting.ItemId, m_ItemPileTransporting.GetAllPile()));    
             }else{
-                m_Target.AddItem(m_ItemPileTransporting.ItemStock);
+                m_Target.AddItem(m_ItemPileTransporting.GetAllPile());
+                WarehouseStorage.Instance.UpdateItemStorage(m_Target.GetItemId());
             }
             m_IsLoaded = false;
         }
@@ -66,7 +69,7 @@ public class TransporterUnit : Unit
     }
 
     void ResetLoadingCountdown(){
-        timeRemaining = MaxAmountTransported * 1f;
+        timeRemaining = m_AmountRequiredToTransport * 1f;
     }
 
     void LoadingItems(){
@@ -74,8 +77,9 @@ public class TransporterUnit : Unit
             timeRemaining -= Time.deltaTime;
         }else{
             m_ItemPileTransporting.Init(m_Target.GetItemId());
-            m_ItemPileTransporting.AddItem(m_Target.GetItem(m_AmountTransported)); 
+            m_ItemPileTransporting.AddItem(m_Target.GetItem(m_AmountRequiredToTransport)); 
             m_IsLoaded = true;
+            WarehouseStorage.Instance.UpdateItemStorage(m_Target.GetItemId());
         }
     }
 

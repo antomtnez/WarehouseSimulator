@@ -75,8 +75,8 @@ public class DropPoint : Inventory, IStorageInteractable
             return amount - addedAmount;
 
         }catch(Exception e){
-            Debug.LogWarning($"This item isn't be in the order: {e}");
-            return 0;
+            Debug.LogWarning($"This item isn't be in the order list: {e}");
+            return amount;
         }
     }
 

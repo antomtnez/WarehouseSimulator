@@ -33,6 +33,14 @@ public class ItemPile : MonoBehaviour
     public int GetItem(int requestAmount){
         int amount = Mathf.Min(requestAmount, ItemStock);
         m_ItemStock -= amount;
+        SetDisplay();
+        return amount;
+    }
+
+    public int GetAllPile(){
+        int amount = m_ItemStock;
+        m_ItemStock = 0;
+        SetDisplay();
         return amount;
     }
 

@@ -10,7 +10,7 @@ public abstract class Unit : MonoBehaviour
     public float LoadedSpeed = 3;
 
     protected NavMeshAgent m_Agent;
-    protected IStorageInteractable m_Target;
+    [SerializeField] protected IStorageInteractable m_Target;
 
     protected void Awake()
     {

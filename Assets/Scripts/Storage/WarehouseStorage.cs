@@ -40,4 +40,12 @@ public class WarehouseStorage : MonoBehaviour
             m_WarehouseStoragePresenter.OnItemStockChanged(itemStorage);
         }
     }
+
+    public void UpdateItemStorage(string ItemId){
+        int found = m_ItemsStorages.FindIndex(itemStorage => itemStorage.ItemId == ItemId);
+        if(found >= 0){
+            m_ItemsStorages[found].SetStock();
+            m_WarehouseStoragePresenter.OnItemStockChanged(m_ItemsStorages[found]);
+        }
+    }
 }

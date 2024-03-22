@@ -31,7 +31,7 @@ public class ItemStorage
         m_ItemMaxStock = m_ItemRacks.Count * m_ItemRacks[0].ItemMaxStock;
     }
 
-    void SetStock(){
+    public void SetStock(){
         m_ItemStock = 0;
         foreach(ItemRack itemRack in m_ItemRacks)
             m_ItemStock += itemRack.ItemStock;
@@ -49,8 +49,9 @@ public class ItemStorage
     public int GetItem(int requestAmount){
         int amount = Mathf.Min(requestAmount, ItemStock);
         requestAmount = 0;
-        for(int i = m_ItemRacks.Count; i <= 0 || requestAmount == amount; i--){
+        for(int i = m_ItemRacks.Count-1; i >= 0; i--){
             requestAmount += m_ItemRacks[i].GetItem(amount);
+            if(requestAmount == amount) break;
         }
         SetStock();
         return requestAmount;

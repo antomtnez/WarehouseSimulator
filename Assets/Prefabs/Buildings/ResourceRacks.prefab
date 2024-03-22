@@ -71,6 +71,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4911680404194126473}
     m_Modifications:
+    - target: {fileID: 1712884692928217188, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
+      propertyPath: m_Name
+      value: Pile5
+      objectReference: {fileID: 0}
     - target: {fileID: 5312557517802471362, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
       propertyPath: m_Name
       value: Rack
@@ -118,6 +122,10 @@ PrefabInstance:
     - target: {fileID: 5312557517802471373, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642060282468967645, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
+      propertyPath: m_Name
+      value: Pile4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
@@ -195,6 +203,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4911680404194126473}
     m_Modifications:
+    - target: {fileID: 1712884692928217188, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
+      propertyPath: m_Name
+      value: Pile3
+      objectReference: {fileID: 0}
     - target: {fileID: 5312557517802471362, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
       propertyPath: m_Name
       value: Rack
@@ -242,6 +254,10 @@ PrefabInstance:
     - target: {fileID: 5312557517802471373, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6642060282468967645, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
+      propertyPath: m_Name
+      value: Pile2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cdfb34ea7d3075748864c87b5ff10b56, type: 3}
