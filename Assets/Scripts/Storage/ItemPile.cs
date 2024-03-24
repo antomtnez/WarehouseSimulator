@@ -22,12 +22,10 @@ public class ItemPile : MonoBehaviour
     }
 
     public int AddItem(int amount){
-        Debug.Log($"{transform.name} wants to add {amount} of {m_ItemId}");
         if (ItemStock == ItemMaxStock)
             return amount;
 
         int addedAmount = Mathf.Min(ItemMaxStock - ItemStock, amount);
-        Debug.Log($"{transform.name} finally adds {amount} of {m_ItemId}");
         m_ItemStock += addedAmount;
         SetDisplay();
         return amount - addedAmount;

@@ -14,18 +14,13 @@ public abstract class Carrier : MonoBehaviour
     protected CarrierState m_CurrentState;
     protected CarrierState m_PreviousState;
     public event Action OnTaskFinished;
-
-    void OnTaskFinishedMessage(){
-        Debug.Log("OnTaskFinished done");
-    }
     
     protected void OnTaskFinishedActionCall(){
         OnTaskFinished();
     }
 
     void Awake(){
-        InitNavMeshAgent();
-        OnTaskFinished += OnTaskFinishedMessage;    
+        InitNavMeshAgent();   
     }
 
     void InitNavMeshAgent(){
@@ -42,7 +37,6 @@ public abstract class Carrier : MonoBehaviour
     public void ChangeState(CarrierState state){
         m_PreviousState = m_CurrentState;
         m_CurrentState = state;
-        Debug.Log($"{state}");
         m_CurrentState.EnterState();
     }
 

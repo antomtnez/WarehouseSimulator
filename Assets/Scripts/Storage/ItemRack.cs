@@ -46,9 +46,7 @@ public class ItemRack : MonoBehaviour, IStorageInteractable
     }
 
     public int GetItem(int requestAmount){
-        Debug.Log($"{transform.name}: someone wants to get {requestAmount} of {ItemId}");
         int amountCanGet = Mathf.Min(requestAmount, ItemStock);
-        Debug.Log($"{transform.name}: I can give you {amountCanGet} of {ItemId}");
 
         for(int i = m_ItemPiles.Count-1; i >= 0; i--){
             amountCanGet -= m_ItemPiles[i].GetItem(amountCanGet > m_ItemPiles[0].ItemMaxStock ? m_ItemPiles[0].ItemMaxStock : amountCanGet);

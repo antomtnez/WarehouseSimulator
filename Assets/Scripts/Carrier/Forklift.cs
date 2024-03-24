@@ -61,11 +61,10 @@ public class Forklift : Carrier
             yield return new WaitForSeconds(0.2f);
             countdown += 0.25f;
         }
-        
+
         if(m_ItemPileTransporting.ItemId != m_StorageTarget.GetItemId())
             m_ItemPileTransporting.Init(m_StorageTarget.GetItemId());
         
-        Debug.Log($"Amount requied of {m_ItemPileTransporting.ItemId}: {m_AmountRequiredToTransport}");
         m_ItemPileTransporting.AddItem(m_StorageTarget.GetItem(m_AmountRequiredToTransport));
         WarehouseStorage.Instance.UpdateItemStorage(m_StorageTarget.GetItemId());
         OnTaskFinishedActionCall();
