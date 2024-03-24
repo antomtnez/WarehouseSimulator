@@ -38,8 +38,10 @@ public class DropPoint : MonoBehaviour, IStorageInteractable
             m_CurrentTotalStock += addedAmount;
 
             m_OrderPresenter.OnInventoryChanged(itemId);
-            if(DropOrder.IsOrderCompleted())
+            if(DropOrder.IsOrderCompleted()){
+                GameManager.Instance.OrderCompleted(DropOrder);
                 GenerateNewOrder();
+            }
 
             return amount - addedAmount;
 

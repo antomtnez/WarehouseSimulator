@@ -6,10 +6,10 @@ public class GameManagerPresenter
     public GameManagerPresenter(GameManagerView view){
         gameManager = GameManager.Instance;
         gameManagerView = view;
-        InitializeView();
+        OnPlayerStatsChanged();
     }
 
-    void InitializeView(){
+    public void OnPlayerStatsChanged(){
         gameManagerView.SetLevel(gameManager.Level);
         gameManagerView.SetMaxExperience(gameManager.GetExperienceToNextLevel());
         gameManagerView.SetExperience(gameManager.CurrentExperience);
