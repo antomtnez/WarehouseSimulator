@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,9 +15,19 @@ public abstract class Carrier : MonoBehaviour
     private Vector3 m_CurrentTargetPosition = Vector3.zero;
     protected CarrierState m_CurrentState;
     protected CarrierState m_PreviousState;
+    public event Action OnTaskFinished;
+
+    void OnTaskFinishedMessage(){
+        Debug.Log("OnTaskFinished done");
+    }
+    
+    protected void OnTaskFinishedActionCall(){
+        OnTaskFinished();
+    }
 
     void Awake(){
         InitNavMeshAgent();
+        OnTaskFinished += OnTaskFinishedMessage;    
     }
 
     void InitNavMeshAgent(){
