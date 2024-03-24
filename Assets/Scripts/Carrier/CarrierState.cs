@@ -65,6 +65,7 @@ public class ReturnItemsToRackState : CarrierState{
     }
 
     private void FinishReturningItems(){
+        m_Carrier.OnTaskFinished -= FinishReturningItems;
         m_NextState = new IdleState(m_Carrier);
         ChangeState();
     }
@@ -79,6 +80,7 @@ public class LoadItemsState : CarrierState{
     }
 
     private void FinishLoadingItems(){
+        m_Carrier.OnTaskFinished -= FinishLoadingItems;
         m_NextState = new GoToDropPointState(m_Carrier);
         ChangeState();
     }
@@ -106,6 +108,7 @@ public class DropItemsState : CarrierState{
     }
 
     private void FinishDroppingItems(){
+        m_Carrier.OnTaskFinished -= FinishDroppingItems;
         m_NextState = new GoToRackState(m_Carrier);
         ChangeState();
     }

@@ -1,5 +1,4 @@
 using System.Collections;
-using UnityEditor.SceneManagement;
 using UnityEngine;
 
 public class Forklift : Carrier
@@ -22,7 +21,11 @@ public class Forklift : Carrier
     }
 
     public override void LoadItems(){
-        StartCoroutine(DelayedLoadItems());
+        if(CanIGetItemsFromStorage()){
+            StartCoroutine(DelayedLoadItems());
+        }else{
+            ChangeState(new IdleState(this));
+        }
     }
 
     public override bool IsEmpty(){
@@ -58,8 +61,11 @@ public class Forklift : Carrier
             yield return new WaitForSeconds(0.2f);
             countdown += 0.25f;
         }
-
-        m_ItemPileTransporting.Init(m_StorageTarget.GetItemId());
+        
+        if(m_ItemPileTransporting.ItemId != m_StorageTarget.GetItemId())
+            m_ItemPileTransporting.Init(m_StorageTarget.GetItemId());
+        
+        Debug.Log($"Amount requied of {m_ItemPileTransporting.ItemId}: {m_AmountRequiredToTransport}");
         m_ItemPileTransporting.AddItem(m_StorageTarget.GetItem(m_AmountRequiredToTransport));
         WarehouseStorage.Instance.UpdateItemStorage(m_StorageTarget.GetItemId());
         OnTaskFinishedActionCall();

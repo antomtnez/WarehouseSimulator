@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using Unity.IO.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -56,12 +54,6 @@ public abstract class Carrier : MonoBehaviour
         m_CurrentState.GoTo(position);
     }
 
-    public void SetAgentDestination(Vector3 position){
-        m_CurrentTargetPosition = position;
-        m_Agent.SetDestination(m_CurrentTargetPosition);
-        m_Agent.isStopped = false;
-    }
-
     public void SetStorageTarget(IStorageInteractable target){
         if(target != DropPoint.Instance as IStorageInteractable)
             m_CurrentWorkingStorage = target;
@@ -70,6 +62,12 @@ public abstract class Carrier : MonoBehaviour
 
         if(m_StorageTarget != null)
             SetAgentDestination(m_StorageTarget.GetPosition());
+    }
+
+    public void SetAgentDestination(Vector3 position){
+        m_CurrentTargetPosition = position;
+        m_Agent.SetDestination(m_CurrentTargetPosition);
+        m_Agent.isStopped = false;
     }
 
     public void GoBackToCurrentWorkingStorage(){
@@ -86,6 +84,10 @@ public abstract class Carrier : MonoBehaviour
             return distanceToStorage < 2.0f;
         }
         return false;
+    }
+
+    protected bool CanIGetItemsFromStorage(){
+        return !m_CurrentWorkingStorage.IsEmpty();
     }
 
     public abstract bool IsEmpty();
