@@ -13,8 +13,11 @@ public class ItemPile : MonoBehaviour
     public void Init(string ItemId){
         m_ItemId = ItemId;
         m_ItemMaxStock = WarehouseStorage.Instance.ItemDB.GetItem(ItemId).MaxStockableInAPile; 
-        if(ItemPileDisplay == null)
-            ItemPileDisplay = Instantiate(WarehouseStorage.Instance.ItemDB.GetItem(ItemId).ItemGameObject, transform);
+        if(WarehouseStorage.Instance.ItemDB.GetItem(ItemId).ItemGameObject != ItemPileDisplay)
+            Destroy(ItemPileDisplay);
+        
+        ItemPileDisplay = Instantiate(WarehouseStorage.Instance.ItemDB.GetItem(ItemId).ItemGameObject, transform);
+            
         
         SetDisplay();
     }

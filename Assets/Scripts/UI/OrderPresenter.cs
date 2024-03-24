@@ -6,17 +6,16 @@ public class OrderPresenter
     public OrderPresenter(DropPoint dropPoint, OrderView orderView){
         m_DropPoint = dropPoint;
         m_OrderView = orderView;
-        InitializeView();
     } 
 
-    void InitializeView(){
-        m_OrderView.SetOrderItems(m_DropPoint.DropOrder.OrderInventory, m_DropPoint.InventoryEntryList);
+    public void OnNewOrder(){
+        m_OrderView.SetOrderItems(m_DropPoint.DropOrder.OrderInventory);
         m_OrderView.SetReward(m_DropPoint.DropOrder.Reward);
     }
 
     public void OnInventoryChanged(string ItemId){
         int found = m_DropPoint.DropOrder.OrderInventory.FindIndex(item => item.ItemId == ItemId);
         if(found != -1)
-            m_OrderView.UpdateItemsList(m_DropPoint.DropOrder.OrderInventory[found], m_DropPoint.InventoryEntryList[found]);
+            m_OrderView.UpdateItemsList(m_DropPoint.DropOrder.OrderInventory[found]);
     }
 }

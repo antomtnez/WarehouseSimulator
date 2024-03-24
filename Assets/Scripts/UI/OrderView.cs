@@ -9,11 +9,13 @@ public class OrderView : MonoBehaviour
     private Dictionary<string, ItemBoxView> m_ItemBoxViewDictionary = new Dictionary<string, ItemBoxView>();
     [SerializeField] TextMeshProUGUI rewardText;
 
-    public void SetOrderItems(List<Inventory.InventoryEntry> orderEntry, List<Inventory.InventoryEntry> inventoryEntry){
+    public void SetOrderItems(List<Order.OrderEntry> orderEntry){
+        m_ItemBoxViewDictionary.Clear();
+
         for(int i=0; i < orderEntry.Count; i++){
             ItemBoxView itemBoxView = Instantiate(itemBoxPrefab, itemBoxListPanel.transform).GetComponent<ItemBoxView>();
             itemBoxView.SetItemIcon(WarehouseStorage.Instance.ItemDB.GetItem(orderEntry[i].ItemId));
-            itemBoxView.SetItemText(inventoryEntry[i].Count, orderEntry[i].Count);
+            itemBoxView.SetItemText(orderEntry[i].CurrentStock, orderEntry[i].OrderedStock);
             m_ItemBoxViewDictionary.Add(orderEntry[i].ItemId, itemBoxView);
         }
     }
@@ -22,10 +24,10 @@ public class OrderView : MonoBehaviour
         rewardText.SetText($"Reward: {amount}");
     }
 
-    public void UpdateItemsList(Inventory.InventoryEntry orderEntry, Inventory.InventoryEntry itemEntry){
-        if(m_ItemBoxViewDictionary.ContainsKey(itemEntry.ItemId)){
-            m_ItemBoxViewDictionary.TryGetValue(itemEntry.ItemId, out ItemBoxView itemBoxView);
-            itemBoxView.SetItemText(itemEntry.Count, orderEntry.Count);
+    public void UpdateItemsList(Order.OrderEntry orderEntry){
+        if(m_ItemBoxViewDictionary.ContainsKey(orderEntry.ItemId)){
+            m_ItemBoxViewDictionary.TryGetValue(orderEntry.ItemId, out ItemBoxView itemBoxView);
+            itemBoxView.SetItemText(orderEntry.CurrentStock, orderEntry.OrderedStock);
         }
     }
 }
