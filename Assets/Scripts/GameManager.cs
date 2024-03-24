@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,7 +15,17 @@ public class GameManager : MonoBehaviour
         m_GameManagerPresenter = new GameManagerPresenter(FindObjectOfType<GameManagerView>());
     }  
 
-    public void AddExperience(int exp){
+    public int GetExperienceToNextLevel(){
+        return NextLevelRoad[Level+1];
+    }
+
+    public void OrderCompleted(Order order){
+        AddExperience(100);
+        AddMoney(order.Reward);
+        m_GameManagerPresenter.OnPlayerStatsChanged();
+    }
+
+    void AddExperience(int exp){
         CurrentExperience += exp;
         CheckToUpgradeLevel();
     }
@@ -27,11 +36,7 @@ public class GameManager : MonoBehaviour
                 Level = i;
     }
 
-    public int GetExperienceToNextLevel(){
-        return NextLevelRoad[Level+1];
-    }
-
-    public void AddMoney(int cash){
+    void AddMoney(int cash){
         Money += cash;
     }
 }

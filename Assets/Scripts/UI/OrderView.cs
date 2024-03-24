@@ -6,14 +6,49 @@ public class OrderView : MonoBehaviour
 {
     [SerializeField] GameObject itemBoxPrefab;
     [SerializeField] GameObject itemBoxListPanel;
+    private List<ItemBoxView> m_ItemBoxViewPool = new List<ItemBoxView>();
     private Dictionary<string, ItemBoxView> m_ItemBoxViewDictionary = new Dictionary<string, ItemBoxView>();
     [SerializeField] TextMeshProUGUI rewardText;
 
-    public void SetOrderItems(List<Inventory.InventoryEntry> orderEntry, List<Inventory.InventoryEntry> inventoryEntry){
+    void Awake(){
+        InitializePool();
+    }
+
+    void InitializePool(){
+        for(int i=0; i < 3; i++){
+            AddItemBoxToPool();
+        }
+    }
+
+    ItemBoxView AddItemBoxToPool(){
+        ItemBoxView itemBoxView = Instantiate(itemBoxPrefab, itemBoxListPanel.transform).GetComponent<ItemBoxView>();
+        m_ItemBoxViewPool.Add(itemBoxView);
+        itemBoxView.gameObject.SetActive(false);
+        return itemBoxView;
+    }
+
+    ItemBoxView GetItemBoxFromPool(){
+        foreach(ItemBoxView itemBoxView in m_ItemBoxViewPool)
+            if(!itemBoxView.gameObject.activeInHierarchy)
+                return itemBoxView;
+        
+        return AddItemBoxToPool();
+    }
+
+    void ResetPool(){
+        foreach(ItemBoxView itemBoxView in m_ItemBoxViewPool)
+            itemBoxView.gameObject.SetActive(false);
+    }
+
+    public void SetOrderItems(List<Order.OrderEntry> orderEntry){
+        m_ItemBoxViewDictionary.Clear();
+        ResetPool();
+        
         for(int i=0; i < orderEntry.Count; i++){
-            ItemBoxView itemBoxView = Instantiate(itemBoxPrefab, itemBoxListPanel.transform).GetComponent<ItemBoxView>();
+            ItemBoxView itemBoxView = GetItemBoxFromPool();
             itemBoxView.SetItemIcon(WarehouseStorage.Instance.ItemDB.GetItem(orderEntry[i].ItemId));
-            itemBoxView.SetItemText(inventoryEntry[i].Count, orderEntry[i].Count);
+            itemBoxView.SetItemText(orderEntry[i].CurrentStock, orderEntry[i].OrderedStock);
+            itemBoxView.gameObject.SetActive(true);
             m_ItemBoxViewDictionary.Add(orderEntry[i].ItemId, itemBoxView);
         }
     }
@@ -22,10 +57,10 @@ public class OrderView : MonoBehaviour
         rewardText.SetText($"Reward: {amount}");
     }
 
-    public void UpdateItemsList(Inventory.InventoryEntry orderEntry, Inventory.InventoryEntry itemEntry){
-        if(m_ItemBoxViewDictionary.ContainsKey(itemEntry.ItemId)){
-            m_ItemBoxViewDictionary.TryGetValue(itemEntry.ItemId, out ItemBoxView itemBoxView);
-            itemBoxView.SetItemText(itemEntry.Count, orderEntry.Count);
+    public void UpdateItemsList(Order.OrderEntry orderEntry){
+        if(m_ItemBoxViewDictionary.ContainsKey(orderEntry.ItemId)){
+            m_ItemBoxViewDictionary.TryGetValue(orderEntry.ItemId, out ItemBoxView itemBoxView);
+            itemBoxView.SetItemText(orderEntry.CurrentStock, orderEntry.OrderedStock);
         }
     }
 }

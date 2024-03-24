@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,9 +13,14 @@ public abstract class Carrier : MonoBehaviour
     private Vector3 m_CurrentTargetPosition = Vector3.zero;
     protected CarrierState m_CurrentState;
     protected CarrierState m_PreviousState;
+    public event Action OnTaskFinished;
+    
+    protected void OnTaskFinishedActionCall(){
+        OnTaskFinished();
+    }
 
     void Awake(){
-        InitNavMeshAgent();
+        InitNavMeshAgent();   
     }
 
     void InitNavMeshAgent(){
@@ -31,7 +37,6 @@ public abstract class Carrier : MonoBehaviour
     public void ChangeState(CarrierState state){
         m_PreviousState = m_CurrentState;
         m_CurrentState = state;
-        Debug.Log($"{state}");
         m_CurrentState.EnterState();
     }
 
@@ -43,12 +48,6 @@ public abstract class Carrier : MonoBehaviour
         m_CurrentState.GoTo(position);
     }
 
-    public void SetAgentDestination(Vector3 position){
-        m_CurrentTargetPosition = position;
-        m_Agent.SetDestination(m_CurrentTargetPosition);
-        m_Agent.isStopped = false;
-    }
-
     public void SetStorageTarget(IStorageInteractable target){
         if(target != DropPoint.Instance as IStorageInteractable)
             m_CurrentWorkingStorage = target;
@@ -57,6 +56,12 @@ public abstract class Carrier : MonoBehaviour
 
         if(m_StorageTarget != null)
             SetAgentDestination(m_StorageTarget.GetPosition());
+    }
+
+    public void SetAgentDestination(Vector3 position){
+        m_CurrentTargetPosition = position;
+        m_Agent.SetDestination(m_CurrentTargetPosition);
+        m_Agent.isStopped = false;
     }
 
     public void GoBackToCurrentWorkingStorage(){
@@ -73,6 +78,10 @@ public abstract class Carrier : MonoBehaviour
             return distanceToStorage < 2.0f;
         }
         return false;
+    }
+
+    protected bool CanIGetItemsFromStorage(){
+        return !m_CurrentWorkingStorage.IsEmpty();
     }
 
     public abstract bool IsEmpty();

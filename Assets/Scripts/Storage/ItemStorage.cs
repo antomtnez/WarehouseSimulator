@@ -47,13 +47,14 @@ public class ItemStorage
     }
 
     public int GetItem(int requestAmount){
-        int amount = Mathf.Min(requestAmount, ItemStock);
-        requestAmount = 0;
+        int amountCanGet = Mathf.Min(requestAmount, ItemStock);
+
         for(int i = m_ItemRacks.Count-1; i >= 0; i--){
-            requestAmount += m_ItemRacks[i].GetItem(amount);
-            if(requestAmount == amount) break;
+            amountCanGet -= m_ItemRacks[i].GetItem(amountCanGet > m_ItemRacks[0].ItemMaxStock ? m_ItemRacks[0].ItemMaxStock : amountCanGet);
+            if(amountCanGet == 0) break;
         }
+
         SetStock();
-        return requestAmount;
+        return requestAmount - amountCanGet;
     }
 }

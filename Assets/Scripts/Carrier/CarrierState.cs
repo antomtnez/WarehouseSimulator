@@ -61,6 +61,11 @@ public class ReturnItemsToRackState : CarrierState{
     public ReturnItemsToRackState(Carrier carrier) : base(carrier){}
     public override void EnterState(){
         m_Carrier.ReturnItemsToRack();
+        m_Carrier.OnTaskFinished += FinishReturningItems;
+    }
+
+    private void FinishReturningItems(){
+        m_Carrier.OnTaskFinished -= FinishReturningItems;
         m_NextState = new IdleState(m_Carrier);
         ChangeState();
     }
@@ -71,6 +76,11 @@ public class LoadItemsState : CarrierState{
 
     public override void EnterState(){
         m_Carrier.LoadItems();
+        m_Carrier.OnTaskFinished += FinishLoadingItems;
+    }
+
+    private void FinishLoadingItems(){
+        m_Carrier.OnTaskFinished -= FinishLoadingItems;
         m_NextState = new GoToDropPointState(m_Carrier);
         ChangeState();
     }
@@ -94,6 +104,11 @@ public class DropItemsState : CarrierState{
     public DropItemsState(Carrier carrier) : base(carrier){}
     public override void EnterState(){
         m_Carrier.DropItems();
+        m_Carrier.OnTaskFinished += FinishDroppingItems;
+    }
+
+    private void FinishDroppingItems(){
+        m_Carrier.OnTaskFinished -= FinishDroppingItems;
         m_NextState = new GoToRackState(m_Carrier);
         ChangeState();
     }
