@@ -2282,7 +2282,7 @@ GameObject:
   - component: {fileID: 983736901}
   - component: {fileID: 983736900}
   m_Layer: 0
-  m_Name: Main Camera
+  m_Name: MainCamera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2305,7 +2305,7 @@ Camera:
   m_GameObject: {fileID: 983736899}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
+  m_ClearFlags: 1
   m_BackGroundColor: {r: 0.6045301, g: 0.8962264, b: 0.8009545, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
@@ -3764,6 +3764,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1555965556}
   - component: {fileID: 1555965555}
+  - component: {fileID: 1555965557}
   m_Layer: 0
   m_Name: UserControl
   m_TagString: Untagged
@@ -3783,7 +3784,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb2c9c0fdf11de3478664047efa84e65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  PanSpeed: 10
 --- !u!4 &1555965556
 Transform:
   m_ObjectHideFlags: 0
@@ -3798,6 +3798,21 @@ Transform:
   m_Father: {fileID: 1790238015}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1555965557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1555965554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec3cbd459f1cde54e89b8be47b7a60a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  PanSpeed: 10
+  XAxisBounds: {x: -29, y: -4}
+  ZAxisBounds: {x: -6, y: 14}
 --- !u!1 &1574903471
 GameObject:
   m_ObjectHideFlags: 0
