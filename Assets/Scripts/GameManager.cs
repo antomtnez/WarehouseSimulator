@@ -39,4 +39,9 @@ public class GameManager : MonoBehaviour
     void AddMoney(int cash){
         Money += cash;
     }
+
+    public void ExpendMoney(int cash){
+        Money -= cash;
+        m_GameManagerPresenter.OnPlayerStatsChanged();
+    }
 }
