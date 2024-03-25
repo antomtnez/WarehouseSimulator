@@ -23,4 +23,8 @@ public class ShopPresenter{
         m_View.SetTotalPrice(m_Shop.TotalPrice);
         m_View.CanYouBuy(GameManager.Instance.Money >= m_Shop.TotalPrice);
     }
+
+    public void ResetShop(){
+        m_View.ResetView();
+    }
 }

@@ -21,7 +21,7 @@ public class WarehouseStorage : MonoBehaviour
     }
 
     void Start(){
-        StartStoragesWithFullStock();
+        //StartStoragesWithFullStock();
     }
 
     void Init(){

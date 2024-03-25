@@ -18,10 +18,13 @@ public class ItemBoxShopView : MonoBehaviour
     void Awake(){
         AddAmountButton.onClick.AddListener(() => {
             AddAmountToBuy();
+            CheckToBlockAmountButtons();
             OnAmountChanged();
         });
+
         RestAmountButton.onClick.AddListener(() => {
             RestAmountToBuy();
+            CheckToBlockAmountButtons();
             OnAmountChanged();    
         });
     }
@@ -30,11 +33,15 @@ public class ItemBoxShopView : MonoBehaviour
         ItemIcon.sprite = item.Icon;
         m_ItemId = item.Id;
         ItemPriceText.SetText($"{item.BuyingPrice},00");
+        CheckToBlockAmountButtons();
     }
 
-    //TO DO
-    //ESTABLECER LOS LIMITES PARA LOS SELECTORES DE CANTIDAD PARA COMPRAR EN BASE AL ESPACIO
-    //QUE QUEDA EN EL INVENTARIO
+    public void Reset(){
+        m_ItemAmount = 0;
+        SetAmountToBuy();
+        CheckToBlockAmountButtons();
+    }
+
     void AddAmountToBuy(){
         m_ItemAmount++;
         SetAmountToBuy();
@@ -47,5 +54,19 @@ public class ItemBoxShopView : MonoBehaviour
 
     void SetAmountToBuy(){
         ItemAmountText.SetText($"{m_ItemAmount}");
+    }
+
+    void CheckToBlockAmountButtons(){
+        CheckToBlockAddButton();
+        CheckToBlockRestButton();
+    }
+
+    void CheckToBlockAddButton(){
+        ItemStorage itemStorage = WarehouseStorage.Instance.ItemStorages.Find(storage => storage.ItemId == m_ItemId);
+        AddAmountButton.interactable = m_ItemAmount < itemStorage.ItemMaxStock - itemStorage.ItemStock;
+    }
+
+    void CheckToBlockRestButton(){
+        RestAmountButton.interactable = m_ItemAmount >= 1;
     }
 }

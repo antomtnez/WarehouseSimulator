@@ -41,10 +41,12 @@ public class Shop : MonoBehaviour
     }
 
     public void Buy(){
-        GameManager.Instance.Money -= m_TotalPrice;
+        GameManager.Instance.ExpendMoney(m_TotalPrice);
         foreach(ShopEntry shopEntry in m_ShopOrder){
             ItemStorage storage = WarehouseStorage.Instance.ItemStorages.Find(storage => storage.ItemId == shopEntry.ItemId);
             storage.AddItem(shopEntry.Amount);
+            WarehouseStorage.Instance.UpdateItemStorage(shopEntry.ItemId);
         }
+        m_ShopPresenter.ResetShop();
     }
 }

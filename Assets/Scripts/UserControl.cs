@@ -6,55 +6,36 @@ using UnityEngine;
 /// </summary>
 public class UserControl : MonoBehaviour
 {
-    private Camera GameCamera;
-    public float PanSpeed = 10.0f;
-    private GameObject Marker;
-    
+    private Camera m_GameCamera;
+    private GameObject m_Marker;
     private Carrier m_Selected = null;
 
-    private void Start()
-    {
-        GameCamera = Camera.main;
-        Marker = GameObject.FindGameObjectWithTag("Marker");
-        Marker.SetActive(false);
+    void Start(){
+        m_GameCamera = Camera.main;
+        m_Marker = GameObject.FindGameObjectWithTag("Marker");
+        m_Marker.SetActive(false);
     }
 
-    private void Update()
-    {
-        MoveCamera();
-
+    void Update(){
         if (Input.GetMouseButtonDown(0))
         {
-            var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
+            var ray = m_GameCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
+            if (Physics.Raycast(ray, out hit)){
                 //the collider could be children of the unit, so we make sure to check in the parent
-                var unit = hit.collider.GetComponentInParent<Unit>();
                 var carrier = hit.collider.GetComponentInParent<Carrier>();
                 m_Selected = carrier;
-                
-                
-                //check if the hit object have a IUIInfoContent to display in the UI
-                //if there is none, this will be null, so this will hid the panel if it was displayed
-                //var uiInfo = hit.collider.GetComponentInParent<UIMainScene.IUIInfoContent>();
-                //UIMainScene.Instance.SetNewInfoContent(uiInfo);
             }
-        }
-        else if (m_Selected != null && Input.GetMouseButtonDown(1))
-        {//right click give order to the unit
-            var ray = GameCamera.ScreenPointToRay(Input.mousePosition);
+        }else if (m_Selected != null && Input.GetMouseButtonDown(1)){
+            //right click give order to the unit
+            var ray = m_GameCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
-            if (Physics.Raycast(ray, out hit))
-            {
+            if (Physics.Raycast(ray, out hit)){
                 var storageInteractable = hit.collider.GetComponentInParent<IStorageInteractable>();
                 
-                if (storageInteractable!= null)
-                {
+                if (storageInteractable!= null){
                     m_Selected.GoTo(storageInteractable);
-                }
-                else
-                {
+                }else{
                     m_Selected.GoTo(hit.point);
                 }
             }
@@ -62,25 +43,17 @@ public class UserControl : MonoBehaviour
 
         MarkerHandling();
     }
-
-    void MoveCamera(){
-        Vector2 move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
-        GameCamera.transform.position = GameCamera.transform.position + new Vector3(move.y, 0, -move.x) * PanSpeed * Time.deltaTime;
-    }
     
     // Handle displaying the marker above the unit that is currently selected (or hiding it if no unit is selected)
-    void MarkerHandling()
-    {
-        if (m_Selected == null && Marker.activeInHierarchy)
-        {
-            Marker.SetActive(false);
-            Marker.transform.SetParent(null);
+    void MarkerHandling(){
+        if (m_Selected == null && m_Marker.activeInHierarchy){
+            m_Marker.SetActive(false);
+            m_Marker.transform.SetParent(null);
         }
-        else if (m_Selected != null && Marker.transform.parent != m_Selected.transform)
-        {
-            Marker.SetActive(true);
-            Marker.transform.SetParent(m_Selected.transform, false);
-            Marker.transform.localPosition = Vector3.zero;
+        else if (m_Selected != null && m_Marker.transform.parent != m_Selected.transform){
+            m_Marker.SetActive(true);
+            m_Marker.transform.SetParent(m_Selected.transform, false);
+            m_Marker.transform.localPosition = Vector3.zero;
         }    
     }
 }

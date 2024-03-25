@@ -29,6 +29,16 @@ public class ShopView : MonoBehaviour
         }
     }
 
+    public void ResetView(){
+        foreach(Shop.ShopEntry shopEntry in m_ShopEntries){
+            if(m_ItemBoxShopList.TryGetValue(shopEntry.ItemId, out ItemBoxShopView itemBoxShopView)){
+                itemBoxShopView.Reset();
+                shopEntry.Amount = itemBoxShopView.ItemAmountToBuy;
+            }
+        }
+        OnShopOrderChanged();
+    }
+
     void UpdateShopEntries(){
         foreach(Shop.ShopEntry shopEntry in m_ShopEntries){
             if(m_ItemBoxShopList.TryGetValue(shopEntry.ItemId, out ItemBoxShopView itemBoxShopView))
