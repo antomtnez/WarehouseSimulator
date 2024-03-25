@@ -13,7 +13,7 @@ public class DayAndNight : MonoBehaviour
     [Header("Day Variables")]
     [SerializeField] float m_DayDurationInSeconds = 60f;
 
-    private float m_CurrentTime = 0f;
+    [SerializeField] float m_CurrentTime = 0f;
 
     void Update(){
         UpdateTime();
@@ -26,8 +26,8 @@ public class DayAndNight : MonoBehaviour
     }
 
     void UpdateDayAndNightCycle(){
-        float sunPosition = Mathf.Repeat(m_CurrentTime + .25f, 1f);
-        directionalLight.transform.rotation = Quaternion.Euler(sunPosition * 360f, 0f, 0f);
+        float sunPosition = Mathf.Repeat(m_CurrentTime, 1f);
+        directionalLight.transform.rotation = Quaternion.Euler(sunPosition * 180f, 0f, 0f);
 
         RenderSettings.fogColor = fogGradient.Evaluate(m_CurrentTime);
         RenderSettings.ambientLight = ambientGradient.Evaluate(m_CurrentTime);
