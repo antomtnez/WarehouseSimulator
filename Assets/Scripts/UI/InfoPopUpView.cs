@@ -18,16 +18,22 @@ public class InfoPopUpView : MonoBehaviour{
     [Header("Rack UI")]
     [SerializeField] GameObject m_rackInfoPanel;
     [SerializeField] Image m_itemIcon;
+    private Object m_ObjToShowInfo;
 
     public void SetUIInfoContent(IUIInfoContent infoContent){
+        m_InfoPopUp.SetActive(true);
         m_nameText.SetText(infoContent.GetName());
         m_infoText.SetText(infoContent.GetData());
-        var obj = infoContent.GetContent();
-        if(obj is Forklift)
-            SetForkliftUI((Forklift)obj);
+        m_ObjToShowInfo = infoContent.GetContent();
 
-        if(obj is ItemRack)
-            SetItemRackUI((ItemRack)obj);
+        if(m_ObjToShowInfo is Forklift){
+            SetForkliftUI((Forklift)m_ObjToShowInfo);
+            var obj = m_ObjToShowInfo as Carrier;
+            obj.OnStateChanged += UpdateForkliftUI;
+        }
+
+        if(m_ObjToShowInfo is ItemRack)
+            SetItemRackUI((ItemRack)m_ObjToShowInfo);
     }
 
     void SetForkliftUI(Forklift forklift){
@@ -43,9 +49,23 @@ public class InfoPopUpView : MonoBehaviour{
         m_itemIcon.sprite = WarehouseStorage.Instance.ItemDB.GetItem(itemRack.ItemId).Icon;
     }
 
+    void UpdateForkliftUI(){
+        IUIInfoContent iObj = m_ObjToShowInfo as IUIInfoContent;
+        m_infoText.SetText(iObj.GetData());
+        
+        Forklift forklift = m_ObjToShowInfo as Forklift;
+        m_forkliftLoadSlider.maxValue = forklift.ItemPileTransporting.ItemMaxStock;
+        m_forkliftLoadSlider.value = forklift.ItemPileTransporting.ItemStock;
+    }
+
     public void CloseUIInfoContent(){
         m_forkliftInfoPanel.SetActive(false);
         m_rackInfoPanel.SetActive(false);
         m_InfoPopUp.SetActive(false);
+
+        if(m_ObjToShowInfo != null){
+            var obj = m_ObjToShowInfo as Carrier;
+            obj.OnStateChanged -= UpdateForkliftUI;
+        }
     }
 }

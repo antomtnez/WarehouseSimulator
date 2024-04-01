@@ -17,6 +17,7 @@ public abstract class Carrier : MonoBehaviour, InfoPopUpView.IUIInfoContent
     protected CarrierState m_PreviousState;
     public Status m_CurrentStatus { protected get; set; }
     public event Action OnTaskFinished;
+    public event Action OnStateChanged;
     
     protected void OnTaskFinishedActionCall(){
         OnTaskFinished();
@@ -41,6 +42,11 @@ public abstract class Carrier : MonoBehaviour, InfoPopUpView.IUIInfoContent
         m_PreviousState = m_CurrentState;
         m_CurrentState = state;
         m_CurrentStatus = m_CurrentState.EnterState();
+        try{
+            OnStateChanged();
+        }catch(Exception e){
+            Debug.LogWarning(e);
+        }
     }
 
     public virtual void GoTo(IStorageInteractable target){
