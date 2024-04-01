@@ -9,11 +9,13 @@ public class UserControl : MonoBehaviour
     private Camera m_GameCamera;
     private GameObject m_Marker;
     private Carrier m_Selected = null;
+    private InfoPopUpPresenter m_InfoPopUpPresenter;
 
     void Start(){
         m_GameCamera = Camera.main;
         m_Marker = GameObject.FindGameObjectWithTag("Marker");
         m_Marker.SetActive(false);
+        m_InfoPopUpPresenter = new InfoPopUpPresenter(FindObjectOfType<InfoPopUpView>());
     }
 
     void Update(){
@@ -25,6 +27,11 @@ public class UserControl : MonoBehaviour
                 //the collider could be children of the unit, so we make sure to check in the parent
                 var carrier = hit.collider.GetComponentInParent<Carrier>();
                 m_Selected = carrier;
+
+                //check if the hit object have a IUIInfoContent to display in the UI
+                //if there is none, this will be null, so this will hid the panel if it was displayed
+                var uiInfo = hit.collider.GetComponent<InfoPopUpView.IUIInfoContent>();
+                m_InfoPopUpPresenter.SetInfoPopUpContent(uiInfo);
             }
         }else if (m_Selected != null && Input.GetMouseButtonDown(1)){
             //right click give order to the unit
