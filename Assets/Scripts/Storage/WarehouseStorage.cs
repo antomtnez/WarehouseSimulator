@@ -12,7 +12,10 @@ public class WarehouseStorage : MonoBehaviour
 
     private WarehouseStoragePresenter m_WarehouseStoragePresenter;
 
-    
+    [Space(5)]
+    [Header("DEBUG PANEL")]
+    [SerializeField] bool StartFullStorage;
+
     void Awake(){
         Instance = this;
         m_ItemDatabase.Init();
@@ -21,7 +24,8 @@ public class WarehouseStorage : MonoBehaviour
     }
 
     void Start(){
-        //StartStoragesWithFullStock();
+        if(StartFullStorage)
+            StartStoragesWithFullStock();
     }
 
     void Init(){
