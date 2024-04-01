@@ -69,4 +69,16 @@ public class Forklift : Carrier
         WarehouseStorage.Instance.UpdateItemStorage(m_StorageTarget.GetItemId());
         OnTaskFinishedActionCall();
     }
+
+    public override string GetName(){
+        return "Forklift";
+    }
+
+    public override string GetData(){
+        return ($"Estado: {m_CurrentStatus}");
+    }
+
+    public override Object GetContent(){
+        return this;
+    }
 }

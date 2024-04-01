@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemRack : MonoBehaviour, IStorageInteractable
+public class ItemRack : MonoBehaviour, IStorageInteractable, InfoPopUpView.IUIInfoContent
 {
     [SerializeField] Item m_Item;
     [SerializeField]private int m_ItemStock = 0;
@@ -77,5 +77,18 @@ public class ItemRack : MonoBehaviour, IStorageInteractable
 
     public string GetItemId(){
         return m_Item.Id;
+    }
+
+    //UIInfoContent Interface methods
+    public string GetName(){
+        return ($"Rack de {m_Item.Name}");
+    }
+
+    public string GetData(){
+        return ($"Este rack puede contener hasta {ItemMaxStock} unidades de {m_Item.name}");
+    }
+
+    public Object GetContent(){
+        return this;
     }
 }
