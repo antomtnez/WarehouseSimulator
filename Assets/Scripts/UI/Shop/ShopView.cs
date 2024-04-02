@@ -52,7 +52,7 @@ public class ShopView : MonoBehaviour
     }
 
     public void SetTotalPrice(int amount){
-        TotalPriceText.SetText($"{amount},00");
+        TotalPriceText.SetText($"({amount})");
     }
 
     public void CanYouBuy(bool moneyOverPrice){
@@ -60,7 +60,7 @@ public class ShopView : MonoBehaviour
 
         Color totalPriceTextColor;
         if(moneyOverPrice){
-            ColorUtility.TryParseHtmlString("#4d4d4d", out totalPriceTextColor); 
+            ColorUtility.TryParseHtmlString("#ffffff", out totalPriceTextColor); 
         }else{
             ColorUtility.TryParseHtmlString("#f63900", out totalPriceTextColor);
         }
