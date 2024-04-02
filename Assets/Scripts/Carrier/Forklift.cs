@@ -5,7 +5,8 @@ public class Forklift : Carrier
 {
     [SerializeField] ItemPile m_ItemPileTransporting;
     public ItemPile ItemPileTransporting => m_ItemPileTransporting;
-    public int m_AmountRequiredToTransport = 3;
+    [SerializeField] int m_AmountRequiredToTransport = 3;
+    public int AmountRequiredToTransport => m_AmountRequiredToTransport;
     private int m_TimeToManagePileItems = 1;
 
     void Start(){
@@ -68,5 +69,21 @@ public class Forklift : Carrier
         m_ItemPileTransporting.AddItem(m_StorageTarget.GetItem(m_AmountRequiredToTransport));
         WarehouseStorage.Instance.UpdateItemStorage(m_StorageTarget.GetItemId());
         OnTaskFinishedActionCall();
+    }
+
+    public void SetAmountToLoadByForklift(int amount){
+        m_AmountRequiredToTransport = amount;
+    }
+
+    public override string GetName(){
+        return "Forklift";
+    }
+
+    public override string GetData(){
+        return ($"Estado: {m_CurrentStatus}");
+    }
+
+    public override Object GetContent(){
+        return this;
     }
 }

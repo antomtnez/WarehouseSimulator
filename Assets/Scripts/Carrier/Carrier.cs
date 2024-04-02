@@ -3,8 +3,10 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
-public abstract class Carrier : MonoBehaviour
+public abstract class Carrier : MonoBehaviour, InfoPopUpView.IUIInfoContent
 {
+    public enum Status { Parado, Movimiento, Cargando, Descargando }
+
     public float Speed = 5;
     public float LoadedSpeed = 3;
     private NavMeshAgent m_Agent;
@@ -13,7 +15,9 @@ public abstract class Carrier : MonoBehaviour
     private Vector3 m_CurrentTargetPosition = Vector3.zero;
     protected CarrierState m_CurrentState;
     protected CarrierState m_PreviousState;
+    public Status m_CurrentStatus { protected get; set; }
     public event Action OnTaskFinished;
+    public event Action OnStateChanged;
     
     protected void OnTaskFinishedActionCall(){
         OnTaskFinished();
@@ -37,7 +41,12 @@ public abstract class Carrier : MonoBehaviour
     public void ChangeState(CarrierState state){
         m_PreviousState = m_CurrentState;
         m_CurrentState = state;
-        m_CurrentState.EnterState();
+        m_CurrentStatus = m_CurrentState.EnterState();
+        try{
+            OnStateChanged();
+        }catch(Exception e){
+            Debug.LogWarning(e);
+        }
     }
 
     public virtual void GoTo(IStorageInteractable target){
@@ -88,4 +97,9 @@ public abstract class Carrier : MonoBehaviour
     public abstract void DropItems();
     public abstract void ReturnItemsToRack();
     public abstract void LoadItems();
+
+    //UIInfoContent Interface methods
+    public abstract string GetName();
+    public abstract string GetData();
+    public abstract UnityEngine.Object GetContent();
 }
