@@ -49,10 +49,10 @@ public class DayAndNight : MonoBehaviour
     }
 
     void FinishDay(){
-        
+        //Send event to show finish day screen
     }
 
-    void StartNewDay(){
+    public void StartNewDay(){
         m_CurrentTime = 0;
         m_Day++;
         m_DayTimePresenter.SetDay();
